@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | Mauli Hardware</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="contact-info">
+                <span><i class="fas fa-phone"></i> +91 8788485205</span>
+                <span><i class="fas fa-envelope"></i> info@maulimaterials.com</span>
+                <span><i class="fas fa-map-marker-alt"></i>At kalamanuri ,karande complex main road kalamanuri</span>
+            </div>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-whatsapp"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <span class="logo-icon"><i class="fas fa-hard-hat"></i></span>
+                <h1>Mauli<span>Hardware</span></h1>
+            </div>
+            <div class="menu-toggle" id="mobile-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="index.html#about"><i class="fas fa-info-circle"></i> About Us</a></li>
+                <li class="dropdown">
+                    <a href="index.html#products"><i class="fas fa-boxes"></i> Products <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="index.html#cement">Cement & Concrete</a>
+                        <a href="index.html#steel">Steel & Rods</a>
+                        <a href="index.html#paints">Paints & Coatings</a>
+                        <a href="index.html#tools">Tools & Equipment</a>
+                    </div>
+                </li>
+                <li><a href="index.html#contact"><i class="fas fa-envelope"></i> Contact</a></li>
+                <li><a href="index.html#quote" class="btn quote-btn">Get Quote</a></li>
+                <li><a href="login.html" class="btn login-btn">Login</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Register Section -->
+    <section class="register-section">
+        <div class="container">
+            <div class="register-container">
+                <div class="register-image">
+                    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Construction Materials">
+                </div>
+                <div class="register-form">
+                    <h2>Create Your Account</h2>
+                    <form id="registerForm">
+                        <div class="form-group">
+                            <input type="text" id="registerName" placeholder="Full Name" required>
+                            <div class="error-message" id="nameError"></div>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="registerEmail" placeholder="Email Address" required>
+                            <div class="error-message" id="emailError"></div>
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" id="registerPhone" placeholder="Phone Number" required>
+                            <div class="error-message" id="phoneError"></div>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="registerPassword" placeholder="Password" required>
+                            <div class="error-message" id="passwordError"></div>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="registerConfirmPassword" placeholder="Confirm Password" required>
+                            <div class="error-message" id="confirmPasswordError"></div>
+                        </div>
+                        <div class="form-group terms">
+                            <label>
+                                <input type="checkbox" id="agreeTerms" required>
+                                I agree to the <a href="#terms">Terms and Conditions</a> and <a href="#privacy">Privacy Policy</a>
+                            </label>
+                            <div class="error-message" id="termsError"></div>
+                        </div>
+                        <button type="submit" class="btn primary-btn">Register</button>
+                        <p class="login-link">Already have an account? <a href="login.html">Login here</a></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <!-- Same footer as in login.html -->
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Register form validation
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('registerName').value.trim();
+            const email = document.getElementById('registerEmail').value.trim();
+            const phone = document.getElementById('registerPhone').value.trim();
+            const password = document.getElementById('registerPassword').value.trim();
+            const confirmPassword = document.getElementById('registerConfirmPassword').value.trim();
+            const agreeTerms = document.getElementById('agreeTerms').checked;
+            
+            // Reset error messages
+            document.getElementById('nameError').textContent = '';
+            document.getElementById('emailError').textContent = '';
+            document.getElementById('phoneError').textContent = '';
+            document.getElementById('passwordError').textContent = '';
+            document.getElementById('confirmPasswordError').textContent = '';
+            document.getElementById('termsError').textContent = '';
+            
+            // Validate name
+            if (!name) {
+                document.getElementById('nameError').textContent = 'Full name is required';
+                return;
+            }
+            
+            // Validate email
+            if (!email) {
+                document.getElementById('emailError').textContent = 'Email is required';
+                return;
+            } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                document.getElementById('emailError').textContent = 'Please enter a valid email';
+                return;
+            }
+            
+            // Validate phone
+            if (!phone) {
+                document.getElementById('phoneError').textContent = 'Phone number is required';
+                return;
+            } else if (!/^[0-9]{10}$/.test(phone)) {
+                document.getElementById('phoneError').textContent = 'Please enter a valid 10-digit phone number';
+                return;
+            }
+            
+            // Validate password
+            if (!password) {
+                document.getElementById('passwordError').textContent = 'Password is required';
+                return;
+            } else if (password.length < 6) {
+                document.getElementById('passwordError').textContent = 'Password must be at least 6 characters';
+                return;
+            }
+            
+            // Validate confirm password
+            if (password !== confirmPassword) {
+                document.getElementById('confirmPasswordError').textContent = 'Passwords do not match';
+                return;
+            }
+            
+            // Validate terms
+            if (!agreeTerms) {
+                document.getElementById('termsError').textContent = 'You must agree to the terms and conditions';
+                return;
+            }
+            
+            // If validation passes
+            console.log('Registration submitted:', { name, email, phone, password });
+            
+            // Simulate successful registration
+            alert('Registration successful! Redirecting to login page...');
+            
+            // In a real app, you would send this data to your backend
+            // Then redirect to login page
+            setTimeout(() => {
+                window.location.href = 'login.html';
+            }, 1500);
+        });
+    </script>
+</body>
+</html>
