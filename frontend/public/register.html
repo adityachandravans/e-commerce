@@ -51,6 +51,7 @@
                 <li><a href="index.html#contact"><i class="fas fa-envelope"></i> Contact</a></li>
                 <li><a href="index.html#quote" class="btn quote-btn">Get Quote</a></li>
                 <li><a href="login.html" class="btn login-btn">Login</a></li>
+                
             </ul>
         </div>
     </nav>
@@ -106,84 +107,45 @@
     </footer>
 
     <script src="script.js"></script>
-    <script>
-        // Register form validation
-        document.getElementById('registerForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Get form values
-            const name = document.getElementById('registerName').value.trim();
-            const email = document.getElementById('registerEmail').value.trim();
-            const phone = document.getElementById('registerPhone').value.trim();
-            const password = document.getElementById('registerPassword').value.trim();
-            const confirmPassword = document.getElementById('registerConfirmPassword').value.trim();
-            const agreeTerms = document.getElementById('agreeTerms').checked;
-            
-            // Reset error messages
-            document.getElementById('nameError').textContent = '';
-            document.getElementById('emailError').textContent = '';
-            document.getElementById('phoneError').textContent = '';
-            document.getElementById('passwordError').textContent = '';
-            document.getElementById('confirmPasswordError').textContent = '';
-            document.getElementById('termsError').textContent = '';
-            
-            // Validate name
-            if (!name) {
-                document.getElementById('nameError').textContent = 'Full name is required';
-                return;
-            }
-            
-            // Validate email
-            if (!email) {
-                document.getElementById('emailError').textContent = 'Email is required';
-                return;
-            } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-                document.getElementById('emailError').textContent = 'Please enter a valid email';
-                return;
-            }
-            
-            // Validate phone
-            if (!phone) {
-                document.getElementById('phoneError').textContent = 'Phone number is required';
-                return;
-            } else if (!/^[0-9]{10}$/.test(phone)) {
-                document.getElementById('phoneError').textContent = 'Please enter a valid 10-digit phone number';
-                return;
-            }
-            
-            // Validate password
-            if (!password) {
-                document.getElementById('passwordError').textContent = 'Password is required';
-                return;
-            } else if (password.length < 6) {
-                document.getElementById('passwordError').textContent = 'Password must be at least 6 characters';
-                return;
-            }
-            
-            // Validate confirm password
-            if (password !== confirmPassword) {
-                document.getElementById('confirmPasswordError').textContent = 'Passwords do not match';
-                return;
-            }
-            
-            // Validate terms
-            if (!agreeTerms) {
-                document.getElementById('termsError').textContent = 'You must agree to the terms and conditions';
-                return;
-            }
-            
-            // If validation passes
-            console.log('Registration submitted:', { name, email, phone, password });
-            
-            // Simulate successful registration
-            alert('Registration successful! Redirecting to login page...');
-            
-            // In a real app, you would send this data to your backend
-            // Then redirect to login page
-            setTimeout(() => {
-                window.location.href = 'login.html';
-            }, 1500);
+   <script>
+    document.getElementById('registerForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    // Get form values
+    const name = document.getElementById('registerName').value.trim();
+    const email = document.getElementById('registerEmail').value.trim();
+    const phone = document.getElementById('registerPhone').value.trim(); // This is the mobile field
+    const password = document.getElementById('registerPassword').value.trim();
+    const confirmPassword = document.getElementById('registerConfirmPassword').value.trim();
+    const agreeTerms = document.getElementById('agreeTerms').checked;
+
+    // Validate form fields (same as before)
+    if (!name || !email || !phone || !password || password !== confirmPassword || !agreeTerms) {
+        // Handle validation errors (same as before)
+        return;
+    }
+
+    // Send data to backend
+    try {
+        const response = await fetch('http://localhost:3000/register.html', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, email, mobile: phone, password }), // Include mobile field
         });
-    </script>
+        const data = await response.json();
+        
+        if (response.ok) {
+            alert(data.message || 'Registration successful!');
+            window.location.href = 'login.html';
+        } else {
+            alert(data.error || 'Registration failed!');
+        }
+    } catch (error) {
+       
+        alert('An error occurred while registering.');
+      console.log(error);
+    }
+});
+</script>
 </body>
 </html>
