@@ -12,15 +12,32 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 console.log("MongoDB URI:", MONGO_URI); 
-app.use('/api/users', userRoutes);
-app.use(express.static(path.join(__dirname, 'public')));
+app.use('/', userRoutes);
+app.use('/api/auth', authRoutes);
+// Serve everything in the build directory as static
+app.use(express.static(path.join(__dirname, 'build')));
+// Optional: specific route handlers for HTML files
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
+app.get('/login', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'login.html'));
+});
+
+app.get('/register', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'register.html'));
+});
+// If nothing matches, serve index.html (optional fallback)
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 mongoose.connect(MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 }).then(() => console.log('MongoDB connected'))
   .catch(err => console.error(err));
 
-app.use('/api/auth', authRoutes);
+app.use('/', authRoutes);
 
 app.get('/', (req, res) => res.send('API Running'));
 
